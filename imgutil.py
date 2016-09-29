@@ -1,5 +1,10 @@
 import cv2
 
+
+def imagedimensions(img):
+	(h,w) = img.shape[:2]
+	return (h,w);
+
 def resizeImage(image, w, h):
 	img = cv2.resize(image, (w, h)) 
 	return img;
