@@ -49,10 +49,6 @@ if notaPatter(thr):
 	ent = entropy.calcEntropy(img)
 	c = score.ratingsForEntropy(ent)
 	print 'EN rating',c
-	name = 'Result kp = {}, eqlDisRating= {} , ent = {} .jpg'.format(kp,b,ent)	
-	#cv2.imwrite(name,img)
-
-	#drawkeyPointsOnImage(img,thr)	
 
 	#final CheckPoint 
 	e = score.finalRating(a,b,c)
