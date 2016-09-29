@@ -50,7 +50,7 @@ if notaPatter(thr):
 	c = score.ratingsForEntropy(ent)
 	print 'EN rating',c
 
-	#\final CheckPoint 
+	#final CheckPoint 
 	e = score.finalRating(a,b,c)
 
 else:
