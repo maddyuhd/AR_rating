@@ -36,7 +36,7 @@ def ratingsForEntropy(en):
 
 def ratingsForEqlDistOfKp(TLkp, TRkp, BLkp, BRkp, kp):
     
-    print"Total Kp",kp
+    # print"Total Kp",kp
     avgKp = kp /4
     print 'Average Kp',avgKp
 
@@ -48,19 +48,19 @@ def ratingsForEqlDistOfKp(TLkp, TRkp, BLkp, BRkp, kp):
    
     forFiveBelow = avgKp-((avgKp)*cutoffFive/100)
     forFiveAbove = avgKp+((avgKp)*cutoffFive/100)
-    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFiveBelow,forFiveAbove)	
+    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFiveBelow,forFiveAbove)	
 	
     forFourBelow = avgKp-((avgKp)*cutoffFour/100)
     forFourAbove = avgKp+((avgKp)*cutoffFour/100)
-    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFourBelow,forFourAbove)	
+    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFourBelow,forFourAbove)	
 	
     forThreeBelow = avgKp-((avgKp)*cutoffThree/100)
     forThreeAbove = avgKp+((avgKp)*cutoffThree/100)
-    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forThreeBelow,forThreeAbove)	
+    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forThreeBelow,forThreeAbove)	
 	
     forTwoBelow = avgKp-((avgKp)*cutoffTwo/100)
     forTwoAbove = avgKp+((avgKp)*cutoffTwo/100)
-    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forTwoBelow,forTwoAbove)	
+    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forTwoBelow,forTwoAbove)	
 	
     if avgKp >= InitialCutoff:
     	if (forFiveBelow <= TLkp <= forFiveAbove and

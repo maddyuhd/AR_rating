@@ -1,34 +1,26 @@
-import cv2
 import imgutil
 import keypoints
 import entropy
 import score
-
-
-def notaPatter(img):
-    
-    if 2==3:
-    	return False 
-    else:
-		return True
-
+import pattern
 
 #imagePath = sys.argv[1]
 imagePath = "pics/4.jpg"
 
-img = cv2.imread(imagePath,2)
-(h,w) = img.shape[:2]
 thr = 49
 
+img = imgutil.imread(imagePath)
+h,w=imgutil.imagedimensions(img)
+
 #initial CheckPoint For Patterns
-if notaPatter(thr):
+if pattern.notaPatter(thr):
 	
 	#1st ChechPoint 
 	kp = keypoints.findNumberofkeypoints(img,thr)
 	a=score.ratingsForKeypoints(kp)
 
 	# drawkeyPointsOnImage(img,thr)
-	print 'KP rating',a
+	print '1st KP rating',a
 
 	#2nd ChechPoint 
 	tl = imgutil.cropTopLeft(img,w,h)
@@ -43,12 +35,12 @@ if notaPatter(thr):
 
 	b = score.ratingsForEqlDistOfKp(tlkp,trkp,blkp,brkp,kp)
 
-	print 'EQ rating',b
+	print '2nd EQ rating',b
 
 	#3rd ChechPoint
 	ent = entropy.calcEntropy(img)
 	c = score.ratingsForEntropy(ent)
-	print 'EN rating',c
+	print '3rd EN rating',c
 
 	#final CheckPoint 
 	e = score.finalRating(a,b,c)

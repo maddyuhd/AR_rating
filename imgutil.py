@@ -1,5 +1,8 @@
 import cv2
 
+def imread(img):
+	img = cv2.imread(img,2)
+	return img;
 
 def imagedimensions(img):
 	(h,w) = img.shape[:2]
