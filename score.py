@@ -1,8 +1,18 @@
 import math
 
 def finalRating(a, b, c):
-	avg = math.ceil((a+b+c)/3.0 )
-	return avg;
+    if a == b :
+        return a
+
+    elif b == c :
+        return b
+
+    elif a == c :
+        return c
+    
+    else :
+        avg = math.ceil((a+b+c)/3.0 )
+        return avg;
 
 def ratingsForKeypoints(kp):
     
