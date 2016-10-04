@@ -12,6 +12,10 @@ def resizeImage(image, w, h):
 	img = cv2.resize(image, (w, h)) 
 	return img;
 	
+def imwrite(imagename,img2):
+	cv2.imwrite(imagename,img2)
+	return ;
+	
 def cropTopLeft(image, w, h):
 	img = image[0:h/2, 0:w/2] 
 	return img;
