@@ -2,17 +2,24 @@ import math
 
 def finalRating(a, b, c):
     if a == b and (c >= a+2 or c >= a-2) :
+        print "case 1"
         return a
 
     elif b == c and (a >= b+2 or a >= b-2):
+        print "case 2"
         return b
 
     elif a == c and (b >= a+2 or b >= a-2) :
+        print "case 3"
         return c
     
     else :
         avg = math.ceil((a+b+c)/3.0 )
+        print "case 4"
         return avg;
+
+# a =finalRating(1,5,5)
+# print a
 
 
 def ratingsForKeypoints(kp):
