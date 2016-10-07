@@ -1,33 +1,53 @@
 import cv2
 
 def imread(img):
-	img = cv2.imread(img,2)
+	img = cv2.imread(img,1)
 	return img;
 
-def imagedimensions(img):
+def imd(img):
 	(h,w) = img.shape[:2]
 	return (h,w);
 
-def resizeImage(image, w, h):
-	img = cv2.resize(image, (w, h)) 
+def imresize(image, w, h):
+	ar=w/float(h)
+	if h>w:
+		newH=320
+		newW=int(newH*ar)
+	else:
+		newW=320
+		newH=int(newW*ar)
+	
+	img = cv2.resize(image, (newW, newH)) 
 	return img;
 	
 def imwrite(imagename,img2):
 	cv2.imwrite(imagename,img2)
 	return ;
 	
-def cropTopLeft(image, w, h):
+def rgb2gray(img):
+	imgGray = cv2.cvtColor(img,cv2.COLOR_RGB2GRAY)
+	return imgGray;
+
+def gray2rgb(img):
+	imgRgb = cv2.cvtColor(img,cv2.COLOR_GRAY2RGB)
+	return imgRgb;
+
+def drawLines(image, x, y):
+	# cv2.line(image, (int(x)-2,int(y)), (int(x)+2,int(y)),(0,255,255),1)
+	return ;
+
+def cropTL(image, w, h):
 	img = image[0:h/2, 0:w/2] 
 	return img;
 
-def cropTopRight(image, w, h):
+def cropTR(image, w, h):
 	img = image[0:h/2, w/2:w] 
 	return img;
 
-def cropBottomLeft(image, w, h):
+def cropBL(image, w, h):
 	img = image[h/2:h, 0:w/2]
 	return img;
 
-def cropBottomRight(image, w, h):
+def cropBR(image, w, h):
 	img = image[h/2:h, w/2:w] 
 	return img;
