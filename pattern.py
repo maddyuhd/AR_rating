@@ -1,6 +1,6 @@
 import numpy as np
 
-def notaPatter(img,h,w):
+def Pattern(img,h,w):
 	f = np.fft.fft2(img)
 	fshift = np.fft.fftshift(f)
 	magnitude_spectrum = 20*np.log(np.abs(fshift))
@@ -10,12 +10,9 @@ def notaPatter(img,h,w):
 
 		if len(z)<150:
 			a= zip(*np.where(magnitude_spectrum >= num))
-			b=len(a)
-			c=[]
-
-			for n in range (0,b):
-				c+= [abs(a[n][0]-h/2)]
-				if c[0]<25:
-					return True
-				else:
-					return False
+			c= abs(a[0][0]-h/2)
+			print "patt = {}".format(c)
+			if c<25:
+				return True
+			else:
+				return False
