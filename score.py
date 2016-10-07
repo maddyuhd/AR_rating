@@ -18,10 +18,6 @@ def finalRating(a, b, c):
         print "case 4"
         return avg;
 
-# a =finalRating(1,5,5)
-# print a
-
-
 def ratingsForKeypoints(kp):
     
     if 0 <= kp <= 149:

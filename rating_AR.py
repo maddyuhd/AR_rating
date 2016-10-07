@@ -1,64 +1,76 @@
-import imgutil
-import keypoints
-import entropy
-import score
-import pattern
+from imgutil import imread,imd,imresize,imwrite,cropTL,cropTR,cropBL,cropBR,rgb2gray
+from score import ratingsForKeypoints,ratingsForEqlDistOfKp,ratingsForEntropy,finalRating
+from keypoints import findnkp,savekeyPointsOnImage
+from entropy import calcEntropy
+from pattern import Pattern 
 import json
 import sys
+
 
 # imagePath = sys.argv[1]
 # for i in range(1,40):
 # 	print i
 # 	imagePath = "pics/"+str(i)+".jpg"
-imagePath="test/4.jpg"
-# 	print imagePath
+imagePath="test/temp.png"
+	# print imagePath
 
 thr = 49
 
-img = imgutil.imread(imagePath)
-h,w=imgutil.imagedimensions(img)
+imgRgb = imread(imagePath)
+h,w=imd(imgRgb)
 
-#initial CheckPoint For Patterns
-if pattern.notaPatter(img,h,w):
+# Orginal Image Resized 
+imrs=imresize(imgRgb,w,h)
+imwrite("res.jpg",imrs)
+
+# Gray Image Of KeyPoints
+img=rgb2gray(imgRgb)
+imgrs=imresize(img,w,h)
+savekeyPointsOnImage(imgrs,"gray.jpg",thr+5,w,h)
+
+#1st ChechPoint 
+
+if Pattern(img,h,w):
 	
-	#1st ChechPoint 
-	kp = keypoints.findNumberofkeypoints(img,thr)
-	a=score.ratingsForKeypoints(kp)
-
-	# drawkeyPointsOnImage(img,thr)
-	print '1st KP rating',a
+	# kp = findnkp(img,thr)
 
 	#2nd ChechPoint 
-	tl = imgutil.cropTopLeft(img,w,h)
-	tr = imgutil.cropTopRight(img,w,h)
-	bl = imgutil.cropBottomLeft(img,w,h)
-	br = imgutil.cropBottomRight(img,w,h)
+	tl = cropTL(img,w,h)
+	tr = cropTR(img,w,h)
+	bl = cropBL(img,w,h)
+	br = cropBR(img,w,h)
 
-	tlkp=keypoints.findNumberofkeypoints(tl,thr)
-	trkp=keypoints.findNumberofkeypoints(tr,thr)
-	blkp=keypoints.findNumberofkeypoints(bl,thr)
-	brkp=keypoints.findNumberofkeypoints(br,thr)
+	tlkp=findnkp(tl,thr)
+	trkp=findnkp(tr,thr)
+	blkp=findnkp(bl,thr)
+	brkp=findnkp(br,thr)
 
-	b = score.ratingsForEqlDistOfKp(tlkp,trkp,blkp,brkp,kp)
+	#3rd ChechPoint 
+	kp =tlkp+trkp+blkp+brkp
 
+	#4th ChechPoint
+	ent = calcEntropy(img)
+	
+	a = ratingsForKeypoints(kp)
+	b = ratingsForEqlDistOfKp(tlkp,trkp,blkp,brkp,kp)
+	c = ratingsForEntropy(ent)
+
+	print '1st KP rating',a
 	print '2nd EQ rating',b
-
-	#3rd ChechPoint
-	ent = entropy.calcEntropy(img)
-	c = score.ratingsForEntropy(ent)
 	print '3rd EN rating',c
 
 	#final CheckPoint 
-	e = score.finalRating(a,b,c)
-	# imname= "IMG "+str(i)+" Result = "+str(e)+".jpg"
-	# imgutil.imwrite(imname,img)
+	e = finalRating(a,b,c)
 
 else:
 	e = 0
-	print "The image contains repetitive pattern"
+	print "repetitive pattern..!!"
 
-print 'Final rating : ',e
+print 'Final Rating : ',e
 
 #Json Output
-d={'user_id':e,'photo_id':e,'result':e}
+d={
+'user_id':e,
+'photo_id':e,
+'result':e}
 print(json.dumps(d)) 
