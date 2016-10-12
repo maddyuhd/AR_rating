@@ -18,8 +18,7 @@ def imresize(image, w, h):
 		ar=h/float(w)
 		newW=320
 		newH=int(newW*ar)
-		print "new hight and aspect ratio",newH,ar
-	
+		
 	img = cv2.resize(image, (newW, newH)) 
 	return img;
 	

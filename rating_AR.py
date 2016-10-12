@@ -1,8 +1,8 @@
-from imgutil import imread,imd,imresize,imwrite,cropTL,cropTR,cropBL,cropBR,rgb2gray
-from score import ratingsForKeypoints,ratingsForEqlDistOfKp,ratingsForEntropy,finalRating
 from keypoints import findnkp,savekeyPointsOnImage
 from entropy import calcEntropy
 from pattern import Pattern 
+import imgutil
+import score
 import json
 import sys
 
@@ -10,38 +10,29 @@ import sys
 # for i in range(1,40):
 # 	print i
 # 	imagePath = "pics/"+str(i)+".jpg"
-imagePath="test/9.jpg"
+imagePath="test/10.jpg"
 	# print imagePath
 
 thr = 49
 
-imgRgb = imread(imagePath)
-h,w=imd(imgRgb)
+imgRgb = imgutil.imread(imagePath)
+h,w = imgutil.imd(imgRgb)
 
 # Orginal Image Resized 
-imrs=imresize(imgRgb,w,h)
-imwrite("res.jpg",imrs)
+imrs = imgutil.imresize(imgRgb,w,h)
+imgutil.imwrite("res.jpg",imrs)
 
 # Gray Image Of KeyPoints
-img=rgb2gray(imgRgb)
-imgrs=imresize(img,w,h)
-rh,rw=imd(imgrs)
+img = imgutil.rgb2gray(imgRgb)
+imgrs = imgutil.imresize(img,w,h)
+rh,rw = imgutil.imd(imgrs)
 savekeyPointsOnImage(imgrs,"gray.jpg",thr+5,rw,rh)
 
 #1st ChechPoint 
-
 if Pattern(imgrs,rh,rw):
-	pat=time.time()
-	pat1=pat-start
-	print "pat...time taken :",pat1
-	
-	# kp = findnkp(img,thr)
 
 	#2nd ChechPoint 
-	tl = cropTL(img,w,h)
-	tr = cropTR(img,w,h)
-	bl = cropBL(img,w,h)
-	br = cropBR(img,w,h)
+	tl,tr,bl,br = imgutil.crop(img,w,h)
 
 	tlkp=findnkp(tl,thr)
 	trkp=findnkp(tr,thr)
@@ -54,16 +45,16 @@ if Pattern(imgrs,rh,rw):
 	#4th ChechPoint
 	ent = calcEntropy(img)
 	
-	a = ratingsForKeypoints(kp)
-	b = ratingsForEqlDistOfKp(tlkp,trkp,blkp,brkp,kp)
-	c = ratingsForEntropy(ent)
+	a = score.ratingsForKeypoints(kp)
+	b = score.ratingsForEqlDistOfKp(tlkp,trkp,blkp,brkp,kp)
+	c = score.ratingsForEntropy(ent)
 
 	print '1st KP rating',a
 	print '2nd EQ rating',b
 	print '3rd EN rating',c
 
 	#final CheckPoint 
-	e = finalRating(a,b,c)
+	e = score.finalRating(a,b,c)
 
 else:
 	e = 0
