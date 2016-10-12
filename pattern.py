@@ -1,4 +1,7 @@
 import numpy as np
+import time
+
+start =time.time()
 
 def Pattern(img,h,w):
 	f = np.fft.fft2(img)
@@ -13,6 +16,10 @@ def Pattern(img,h,w):
 			c= abs(a[0][0]-h/2)
 			print "patt = {}".format(c)
 			if c<25:
+				p=time.time()
+				print "Time taken for Pattern recognizing:",p-start
 				return True
 			else:
+				p=time.time()
+				print "Time taken for Pattern recognizing:",p-start
 				return False

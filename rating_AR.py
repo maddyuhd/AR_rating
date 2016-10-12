@@ -5,15 +5,12 @@ from entropy import calcEntropy
 from pattern import Pattern 
 import json
 import sys
-import time
-
-start =time.time()
 
 # imagePath = sys.argv[1]
 # for i in range(1,40):
 # 	print i
 # 	imagePath = "pics/"+str(i)+".jpg"
-imagePath="test/10.jpg"
+imagePath="test/9.jpg"
 	# print imagePath
 
 thr = 49
@@ -29,7 +26,7 @@ imwrite("res.jpg",imrs)
 img=rgb2gray(imgRgb)
 imgrs=imresize(img,w,h)
 rh,rw=imd(imgrs)
-savekeyPointsOnImage(imgrs,"gray.jpg",thr+5,w,h)
+savekeyPointsOnImage(imgrs,"gray.jpg",thr+5,rw,rh)
 
 #1st ChechPoint 
 
@@ -69,11 +66,8 @@ if Pattern(imgrs,rh,rw):
 	e = finalRating(a,b,c)
 
 else:
-	pat=time.time()
-	pat1=pat-start
-	print "Pattern...time taken :",pat1
 	e = 0
-	print "repetitive pattern..!!"
+	print "It's Repetitive Pattern...!"
 
 print 'Final Rating : ',e
 

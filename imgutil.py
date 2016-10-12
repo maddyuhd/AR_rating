@@ -11,11 +11,14 @@ def imd(img):
 def imresize(image, w, h):
 	ar=w/float(h)
 	if h>w:
+		ar=w/float(h)
 		newH=320
 		newW=int(newH*ar)
 	else:
+		ar=h/float(w)
 		newW=320
 		newH=int(newW*ar)
+		print "new hight and aspect ratio",newH,ar
 	
 	img = cv2.resize(image, (newW, newH)) 
 	return img;
