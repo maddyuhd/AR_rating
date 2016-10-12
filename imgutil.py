@@ -39,18 +39,9 @@ def drawLines(image, x, y):
 	# cv2.line(image, (int(x)-2,int(y)), (int(x)+2,int(y)),(0,255,255),1)
 	return ;
 
-def cropTL(image, w, h):
-	img = image[0:h/2, 0:w/2] 
-	return img;
-
-def cropTR(image, w, h):
-	img = image[0:h/2, w/2:w] 
-	return img;
-
-def cropBL(image, w, h):
-	img = image[h/2:h, 0:w/2]
-	return img;
-
-def cropBR(image, w, h):
-	img = image[h/2:h, w/2:w] 
-	return img;
+def crop(image, w, h):
+	imgTL = image[0:h/2, 0:w/2] 
+	imgTR = image[0:h/2, w/2:w] 
+	imgBL = image[h/2:h, 0:w/2]
+	imgBR = image[h/2:h, w/2:w] 
+	return imgTL,imgTR,imgBL,imgBR;
