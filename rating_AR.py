@@ -6,11 +6,15 @@ import score
 import json
 import sys
 
-# imagePath = sys.argv[1]
-# for i in range(1,40):
-# 	print i
-# 	imagePath = "pics/"+str(i)+".jpg"
-imagePath="test/6.jpg"
+imagePath = sys.argv[1]
+low = sys.argv[2]
+feature = sys.argv[3]
+intid = sys.argv[4]
+
+low = str(low)+".jpg"
+feature = str(feature)+".jpg"
+
+# imagePath="test/6.jpg"
 
 thr = 49
 imgRgb = imgutil.imread(imagePath)
@@ -18,13 +22,13 @@ h,w = imgutil.imd(imgRgb)
 
 # Save Orginal Image Resized 
 imrs = imgutil.imresize(imgRgb,w,h)
-imgutil.imwrite("low_res.jpg",imrs)
+imgutil.imwrite(low,imrs)
 
 #Save Gray Image Of KeyPoints
 img = imgutil.rgb2gray(imgRgb)
 imgrs = imgutil.imresize(img,w,h)
 rh,rw = imgutil.imd(imgrs)
-savekeyPointsOnImage(imgrs,"feature_img.jpg",thr+5,rw,rh)
+savekeyPointsOnImage(imgrs,feature,thr+5,rw,rh)
 
 '''
 1st ChechPoint 
@@ -73,8 +77,7 @@ else:
 
 # Json Output
 d={
-'user_id':e,
-'photo_id':e,
+'id':intid,
 'result':e
 }
 print(json.dumps(d)) 
