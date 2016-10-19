@@ -48,7 +48,7 @@ def ratingsForEntropy(en):
     elif en >=7.0:
     	return 5
 
-def ratingsForEqlDistOfKp(TLkp, TRkp, BLkp, BRkp, kp):
+def ratingsForEqlDistOfKp(TLkp, TRkp, BLkp, BRkp, kp,ckp, ekp):
     
     # print"Total Kp",kp
     avgKp = kp /4
@@ -62,26 +62,27 @@ def ratingsForEqlDistOfKp(TLkp, TRkp, BLkp, BRkp, kp):
    
     forFiveBelow = avgKp-((avgKp)*cutoffFive/100)
     forFiveAbove = avgKp+((avgKp)*cutoffFive/100)
-    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFiveBelow,forFiveAbove)	
+    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFiveBelow,forFiveAbove)	
 	
     forFourBelow = avgKp-((avgKp)*cutoffFour/100)
     forFourAbove = avgKp+((avgKp)*cutoffFour/100)
-    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFourBelow,forFourAbove)	
+    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFourBelow,forFourAbove)	
 	
     forThreeBelow = avgKp-((avgKp)*cutoffThree/100)
     forThreeAbove = avgKp+((avgKp)*cutoffThree/100)
-    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forThreeBelow,forThreeAbove)	
+    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forThreeBelow,forThreeAbove)	
 	
     forTwoBelow = avgKp-((avgKp)*cutoffTwo/100)
     forTwoAbove = avgKp+((avgKp)*cutoffTwo/100)
-    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forTwoBelow,forTwoAbove)	
+    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forTwoBelow,forTwoAbove)	
 	
     if avgKp >= InitialCutoff:
-    	if (forFiveBelow <= TLkp <= forFiveAbove and
-     forFiveBelow <= TRkp <= forFiveAbove and 
-     forFiveBelow <= BLkp <= forFiveAbove and 
+        if (forFiveBelow <= TLkp <= forFiveAbove and forFiveBelow <= TRkp <= forFiveAbove and forFiveBelow <= BLkp <= forFiveAbove and 
      forFiveBelow <= BRkp <= forFiveAbove):
-    	   	return 5
+            if ckp<ekp:
+                return 4
+            else:
+                return 5
 
     	elif (forFourBelow <= TLkp <= forFourAbove and
      forFourBelow <= TRkp <= forFourAbove and 
@@ -102,3 +103,44 @@ def ratingsForEqlDistOfKp(TLkp, TRkp, BLkp, BRkp, kp):
     		return 1
     else:
     		return 0
+
+def ratingsForCenterDistOfKpc(ckp,mkp,ekp,kp):
+    InitialCutoff=100
+    TwoC=20
+    ThreeC=40
+    FourC=60
+    FiveC=80
+
+    TwoM=10
+    ThreeM=10
+    FourM=10
+    FiveM=10
+    
+    TwoE=10
+    ThreeE=10
+    FourE=10
+    FiveE=10
+
+    print 'is {}  > {} ,{}  > {}, {}  > {} for 5?'.format(ckp ,(kp*FiveC)/100, mkp,(kp*FiveM)/100,ekp,(kp*FiveE)/100)  
+    print 'is {}  > {} ,{}  > {}, {}  > {} for 4?'.format(ckp ,(kp*FourC)/100, mkp,(kp*FourM)/100,ekp,(kp*FourE)/100)  
+    print 'is {}  > {} ,{}  > {}, {}  > {} for 3?'.format(ckp ,(kp*ThreeC)/100, mkp,(kp*ThreeM)/100,ekp,(kp*ThreeE)/100)  
+    print 'is {}  > {} ,{}  > {}, {}  > {} for 2?'.format(ckp ,(kp*TwoC)/100, mkp,(kp*TwoM)/100,ekp,(kp*TwoE)/100)  
+    
+     
+
+    print"Center pt for five cutoff ",(kp*FiveC)/100
+    print"Mid pt for five cutoff ",(kp*FiveM)/100
+    print"End pt for five cutoff ",(kp*FiveE)/100
+    if ckp > InitialCutoff:
+        if ckp > (kp*FiveC)/100 and mkp > (kp*FiveM)/100:# and ekp > (kp*FiveE)/100:
+            return 5
+        elif ckp > (kp*FourC)/100 and mkp > (kp*FourM)/100:# and ekp > (kp*FourE)/100:
+            return 4
+        elif ckp > (kp*ThreeC)/100 and mkp > (kp*ThreeM)/100:# and ekp > (kp*ThreeE)/100:
+            return 3
+        elif ckp > (kp*TwoC)/100 and mkp > (kp*TwoM)/100 :#and ekp > (kp*TwoE)/100:
+            return 2
+        else:
+            return 1
+    else:
+        return 0
