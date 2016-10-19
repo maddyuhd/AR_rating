@@ -6,5 +6,5 @@ def calcEntropy(img):
     hist = hist.ravel()/hist.sum()
     logs = np.log2(hist+0.00001)
     entropy = -1 * (hist*logs).sum()
-    print "Entropy Value :",entropy
+    # print "Entropy Value :",entropy
     return entropy  

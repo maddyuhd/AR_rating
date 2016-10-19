@@ -1,4 +1,4 @@
-from keypoints import findnkp,savekeyPointsOnImage
+from keypoints import findnkp,savekeyPointsOnImage,kpForEqDist,kpForCenter
 from entropy import calcEntropy
 from pattern import Pattern 
 import imgutil
@@ -10,61 +10,71 @@ import sys
 # for i in range(1,40):
 # 	print i
 # 	imagePath = "pics/"+str(i)+".jpg"
-imagePath="test/10.jpg"
-	# print imagePath
+imagePath="test/6.jpg"
 
 thr = 49
-
 imgRgb = imgutil.imread(imagePath)
 h,w = imgutil.imd(imgRgb)
 
-# Orginal Image Resized 
+# Save Orginal Image Resized 
 imrs = imgutil.imresize(imgRgb,w,h)
-imgutil.imwrite("res.jpg",imrs)
+imgutil.imwrite("low_res.jpg",imrs)
 
-# Gray Image Of KeyPoints
+#Save Gray Image Of KeyPoints
 img = imgutil.rgb2gray(imgRgb)
 imgrs = imgutil.imresize(img,w,h)
 rh,rw = imgutil.imd(imgrs)
-savekeyPointsOnImage(imgrs,"gray.jpg",thr+5,rw,rh)
+savekeyPointsOnImage(imgrs,"feature_img.jpg",thr+5,rw,rh)
 
-#1st ChechPoint 
+'''
+1st ChechPoint 
+Check for pattern within the image
+'''
 if Pattern(imgrs,rh,rw):
 
-	#2nd ChechPoint 
-	tl,tr,bl,br = imgutil.crop(img,w,h)
+	'''
+	2nd ChechPoint 
+	Chop the images into 4 equal half and get the keypoits
+	'''
+	kp,tlkp,trkp,blkp,brkp=kpForEqDist(img,thr,w,h)
+	
 
-	tlkp=findnkp(tl,thr)
-	trkp=findnkp(tr,thr)
-	blkp=findnkp(bl,thr)
-	brkp=findnkp(br,thr)
+	
+	#Total Keypoints
+	# print "total",kp
+
+	ckp, mkp, ekp = kpForCenter(img,thr,w,h)
+
+	# print "center",ckp
+	# print "mid",mkp
+	# print "end",ekp
 
 	#3rd ChechPoint 
-	kp =tlkp+trkp+blkp+brkp
 
 	#4th ChechPoint
 	ent = calcEntropy(img)
 	
 	a = score.ratingsForKeypoints(kp)
-	b = score.ratingsForEqlDistOfKp(tlkp,trkp,blkp,brkp,kp)
+	b = score.ratingsForEqlDistOfKp(tlkp,trkp,blkp,brkp,kp,ckp,ekp)
 	c = score.ratingsForEntropy(ent)
 
-	print '1st KP rating',a
-	print '2nd EQ rating',b
-	print '3rd EN rating',c
+	# print '1st KP rating',a
+	# print '2nd EQ rating',b
+	# print '3rd EN rating',c
 
 	#final CheckPoint 
 	e = score.finalRating(a,b,c)
 
 else:
 	e = 0
-	print "It's Repetitive Pattern...!"
+	# print "It's Repetitive Pattern...!"
 
-print 'Final Rating : ',e
+# print 'Final Rating : ',e
 
-#Json Output
+# Json Output
 d={
 'user_id':e,
 'photo_id':e,
-'result':e}
+'result':e
+}
 print(json.dumps(d)) 
