@@ -1,4 +1,5 @@
 import numpy as np
+import imgutil
 
 def Pattern(img,h,w):
 	f = np.fft.fft2(img)
@@ -11,6 +12,7 @@ def Pattern(img,h,w):
 		if len(z)<150:
 			a= zip(*np.where(magnitude_spectrum >= num))
 			c= abs(a[0][0]-h/2)
+			print "PAT====>",c
 			if c<25:
 				return True
 			else:

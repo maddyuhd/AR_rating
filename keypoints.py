@@ -25,8 +25,9 @@ def savekeyPointsOnImage(image,imname ,thr,w,h):
 	img = cv2.cvtColor(image,cv2.COLOR_GRAY2RGB)
 	for k in kp:
 		x,y=k.pt
-		cv2.line(img, (int(x)-2,int(y)), (int(x)+2,int(y)),(0,255,255),1)
-		cv2.line(img, (int(x),int(y)+2), (int(x),int(y)-2),(0,255,255),1)
+		cv2.circle(img, (int(x),int(y)), 2, (50,50,50), thickness=1, lineType=8, shift=0)
+		cv2.line(img, (int(x)-2,int(y)), (int(x)+2,int(y)),(0,252,248),1)
+		cv2.line(img, (int(x),int(y)+2), (int(x),int(y)-2),(0,252,248),1)
 	imwrite(imname,img)
 	return;
 

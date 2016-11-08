@@ -14,7 +14,10 @@ intid = sys.argv[4]
 low = str(low)+".jpg"
 feature = str(feature)+".jpg"
 
-# imagePath="test/6.jpg"
+# imagePath="result/pics/36.jpg"
+# for i in range(1,39):
+	# imagePath="result/pics/"+str(i)+".jpg"
+	# print ("for =============",imagePath)
 
 thr = 49
 imgRgb = imgutil.imread(imagePath)
@@ -22,19 +25,19 @@ h,w = imgutil.imd(imgRgb)
 
 # Save Orginal Image Resized 
 imrs = imgutil.imresize(imgRgb,w,h)
-imgutil.imwrite(low,imrs)
+# imgutil.imwrite("low.jpg",imrs)
 
 #Save Gray Image Of KeyPoints
 img = imgutil.rgb2gray(imgRgb)
 imgrs = imgutil.imresize(img,w,h)
 rh,rw = imgutil.imd(imgrs)
-savekeyPointsOnImage(imgrs,feature,thr+5,rw,rh)
+# savekeyPointsOnImage(imgrs,"feature.jpg",thr+16,rw,rh)
 
 '''
 1st ChechPoint 
 Check for pattern within the image
 '''
-if Pattern(imgrs,rh,rw):
+if Pattern(img,h,w):
 
 	'''
 	2nd ChechPoint 
@@ -42,16 +45,18 @@ if Pattern(imgrs,rh,rw):
 	'''
 	kp,tlkp,trkp,blkp,brkp=kpForEqDist(img,thr,w,h)
 	
-
-	
 	#Total Keypoints
-	# print "total",kp
+	print "total",kp
+	print "TopL",tlkp
+	print "TopR",trkp
+	print "BottomL",blkp
+	print "BottomR",brkp
 
 	ckp, mkp, ekp = kpForCenter(img,thr,w,h)
 
-	# print "center",ckp
-	# print "mid",mkp
-	# print "end",ekp
+	print "center",ckp
+	print "mid",mkp
+	print "end",ekp
 
 	#3rd ChechPoint 
 
@@ -62,18 +67,20 @@ if Pattern(imgrs,rh,rw):
 	b = score.ratingsForEqlDistOfKp(tlkp,trkp,blkp,brkp,kp,ckp,ekp)
 	c = score.ratingsForEntropy(ent)
 
-	# print '1st KP rating',a
-	# print '2nd EQ rating',b
-	# print '3rd EN rating',c
+	print '1st KP rating',a
+	print '2nd EQ rating',b
+	print '3rd EN rating',c
 
 	#final CheckPoint 
 	e = score.finalRating(a,b,c)
 
 else:
 	e = 0
-	# print "It's Repetitive Pattern...!"
+	print "It's Repetitive Pattern...!"
 
-# print 'Final Rating : ',e
+print 'Final Rating : ',e
+name="Result"+str(i)+" ="+str(e)+".jpg"
+imgutil.imwrite(name,imrs)
 
 # Json Output
 d={

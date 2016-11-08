@@ -15,7 +15,7 @@ def finalRating(a, b, c):
     
     else :
         avg = math.ceil((a+b+c)/3.0 )
-        # print "case 4"
+        print "case 4"
         return avg;
 
 def ratingsForKeypoints(kp):
@@ -62,19 +62,19 @@ def ratingsForEqlDistOfKp(TLkp, TRkp, BLkp, BRkp, kp,ckp, ekp):
    
     forFiveBelow = avgKp-((avgKp)*cutoffFive/100)
     forFiveAbove = avgKp+((avgKp)*cutoffFive/100)
-    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFiveBelow,forFiveAbove)	
+    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFiveBelow,forFiveAbove)	
 	
     forFourBelow = avgKp-((avgKp)*cutoffFour/100)
     forFourAbove = avgKp+((avgKp)*cutoffFour/100)
-    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFourBelow,forFourAbove)	
+    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forFourBelow,forFourAbove)	
 	
     forThreeBelow = avgKp-((avgKp)*cutoffThree/100)
     forThreeAbove = avgKp+((avgKp)*cutoffThree/100)
-    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forThreeBelow,forThreeAbove)	
+    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forThreeBelow,forThreeAbove)	
 	
     forTwoBelow = avgKp-((avgKp)*cutoffTwo/100)
     forTwoAbove = avgKp+((avgKp)*cutoffTwo/100)
-    # print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forTwoBelow,forTwoAbove)	
+    print 'is {} ,{} ,{} and {} between {} - {} ?'.format(TLkp,TRkp,BLkp,BRkp,forTwoBelow,forTwoAbove)	
 	
     if avgKp >= InitialCutoff:
         if (forFiveBelow <= TLkp <= forFiveAbove and forFiveBelow <= TRkp <= forFiveAbove and forFiveBelow <= BLkp <= forFiveAbove and 
